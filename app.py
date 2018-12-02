@@ -23,6 +23,7 @@ import requests
 import base64 
 from PIL import Image as PILImage
 
+print("[app] Starting up")
 
 async def get_bytes(url):
     async with aiohttp.ClientSession() as session:
@@ -36,6 +37,9 @@ def encode(img):
     return base64.b64encode(buff.getvalue()).decode("utf-8")
 
 app = Starlette()
+
+
+print("[app] Loading Model")
 
 path = Path("/tmp")
 classes = ['healthy', 'junk']
@@ -68,6 +72,7 @@ def predict_image_from_bytes(bytes):
             reverse=True
         )
     img_data = encode(img)
+    print("[app] Classify Results Model")
     return HTMLResponse(
         """
         <html>
